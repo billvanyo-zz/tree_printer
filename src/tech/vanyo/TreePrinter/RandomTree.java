@@ -5,10 +5,13 @@ import java.util.Random;
 public class RandomTree {
 
     public static void main(String[] args) {
-        TreeNode tree = randomTree(50, false);
+        TreeNode tree = randomTree(30, false);
         TreePrinter.printTree(tree, 1, true);
+        System.out.println("\n\n");
         TreePrinter.printTree(tree, 1, false);
+        System.out.println("\n\n");
         TreePrinter.printTree(tree, 3, true);
+        System.out.println("\n\n");
         TreePrinter.printTree(tree, 3, false);
     }
 
