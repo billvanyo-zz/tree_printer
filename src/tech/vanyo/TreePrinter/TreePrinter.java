@@ -205,8 +205,7 @@ public class TreePrinter {
 
 
     private static String spaces(int n) {
-        String fiftySpaces = "                                                                                           ";
-        return fiftySpaces.substring(0,n);
+        return String.join("", Collections.nCopies(n, " "));
     }
 
     private static class TreeLine {
