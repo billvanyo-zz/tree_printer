@@ -11,7 +11,17 @@ public class TreePrinter {
         Parameter hspace is minimum number of spaces between adjacent node labels.
      */
     public static void printTree(TreeNode root, int hspace) {
-        List<TreeLine> treeLines = buildTreeLines(hspace, root);
+        printTree(root, hspace, false);
+    }
+
+    /*
+        Prints ascii representation of binary tree.
+        Parameter hspace is minimum number of spaces between adjacent node labels.
+        Parameter squareBranches, when set to true, results in branches being printed with ASCII box
+        drawing characters.
+     */
+    public static void printTree(TreeNode root, int hspace, boolean squareBranches) {
+        List<TreeLine> treeLines = buildTreeLines(hspace, root, squareBranches);
         printTreeLines(treeLines);
     }
 
@@ -23,13 +33,27 @@ public class TreePrinter {
         Parameter lineWidth is maximum width of output
      */
     public static void printTrees(List<TreeNode> trees, int hspace, int tspace, int lineWidth) {
+        printTrees(trees, hspace, tspace, lineWidth, false);
+    }
+
+
+    /*
+        Prints ascii representations of multiple trees across page.
+        Parameter hspace is minimum number of spaces between adjacent node labels in a tree.
+        Parameter tspace is horizontal distance between trees, as well as number of blank lines
+        between rows of trees.
+        Parameter lineWidth is maximum width of output
+        Parameter squareBranches, when set to true, results in branches being printed with ASCII box
+        drawing characters.
+     */
+    public static void printTrees(List<TreeNode> trees, int hspace, int tspace, int lineWidth, boolean squareBranches) {
         List<List<TreeLine>> allTreeLines = new ArrayList<>();
         int[] treeWidths = new int[trees.size()];
         int[] minLeftOffsets = new int[trees.size()];
         int[] maxRightOffsets = new int[trees.size()];
         for (int i = 0; i < trees.size(); i++) {
             TreeNode treeNode = (TreeNode) trees.get(i);
-            List<TreeLine> treeLines = buildTreeLines(hspace, treeNode);
+            List<TreeLine> treeLines = buildTreeLines(hspace, treeNode, squareBranches);
             allTreeLines.add(treeLines);
             minLeftOffsets[i] = minLeftOffset(treeLines);
             maxRightOffsets[i] = maxRightOffset(treeLines);
@@ -118,11 +142,11 @@ public class TreePrinter {
     }
 
 
-    static List<TreeLine> buildTreeLines(int hspace, TreeNode root) {
+    static List<TreeLine> buildTreeLines(int hspace, TreeNode root, boolean squareBranches) {
         if (root == null) return Collections.emptyList();
         else {
-            List<TreeLine> leftTreeLines = buildTreeLines(hspace, root.getLeft());
-            List<TreeLine> rightTreeLines = buildTreeLines(hspace, root.getRight());
+            List<TreeLine> leftTreeLines = buildTreeLines(hspace, root.getLeft(), squareBranches);
+            List<TreeLine> rightTreeLines = buildTreeLines(hspace, root.getRight(), squareBranches);
 
             int leftCount = leftTreeLines.size();
             int rightCount = rightTreeLines.size();
@@ -151,26 +175,46 @@ public class TreePrinter {
             if (leftTreeLines.isEmpty()) {
                 if (!rightTreeLines.isEmpty()) {
                     // there's a right subtree only
-                    allTreeLines.add(new TreeLine("\\", 1, 1));
-                    rightTreeAdjust = 2;
+                    if (squareBranches) {
+                        allTreeLines.add(new TreeLine("\u2514\u2500\u2510", 0, 2));
+                        rightTreeAdjust = 2;
+
+                    } else {
+                        allTreeLines.add(new TreeLine("\\", 1, 1));
+                        rightTreeAdjust = 2;
+                    }
                 }
             } else if (rightTreeLines.isEmpty()) {
                 // there's a left subtree only
-                allTreeLines.add(new TreeLine("/", -1, -1));
-                leftTreeAdjust = -2;
-            } else {
-                // there's a left and right subtree
-                if (rootSpacing==1) {
-                    allTreeLines.add(new TreeLine("/ \\", -1, 1));
-                    rightTreeAdjust = 2;
+                if (squareBranches) {
+                    allTreeLines.add(new TreeLine("\u250C\u2500\u2518", -2, 0));
                     leftTreeAdjust = -2;
                 } else {
-                    for (int i = 1; i < rootSpacing ; i+=2) {
-                        String branches = "/" + spaces(i) + "\\";
-                        allTreeLines.add(new TreeLine(branches, -((i+1)/2), (i+1)/2));
+                    allTreeLines.add(new TreeLine("/", -1, -1));
+                    leftTreeAdjust = -2;
+                }
+            } else {
+                // there's a left and right subtree
+                if (squareBranches) {
+                    int adjust = (rootSpacing == 1 ? 1 : ((rootSpacing/2)+1));
+                    String horizontal = String.join("", Collections.nCopies(rootSpacing/2, "\u2500"));
+                    String branch = "\u250C" + horizontal + "\u2534" + horizontal + "\u2510";
+                    allTreeLines.add(new TreeLine(branch, -adjust, adjust));
+                    rightTreeAdjust = adjust;
+                    leftTreeAdjust = -adjust;
+                } else {
+                    if (rootSpacing==1) {
+                        allTreeLines.add(new TreeLine("/ \\", -1, 1));
+                        rightTreeAdjust = 2;
+                        leftTreeAdjust = -2;
+                    } else {
+                        for (int i = 1; i < rootSpacing ; i+=2) {
+                            String branches = "/" + spaces(i) + "\\";
+                            allTreeLines.add(new TreeLine(branches,  -((i+1)/2), (i+1)/2));
+                        }
+                        rightTreeAdjust = (rootSpacing/2)+1;
+                        leftTreeAdjust = -((rootSpacing/2)+1);
                     }
-                    rightTreeAdjust = (rootSpacing/2)+1;
-                    leftTreeAdjust = -((rootSpacing/2)+1);
                 }
             }
 
@@ -193,7 +237,7 @@ public class TreePrinter {
                 } else {
                     leftLine = leftTreeLines.get(i);
                     rightLine = rightTreeLines.get(i);
-                    int adjustedRootSpacing = (rootSpacing==1 ? 3 : rootSpacing);
+                    int adjustedRootSpacing = (rootSpacing==1 ? (squareBranches ? 1 : 3) : rootSpacing);
                     TreeLine combined  = new TreeLine(leftLine.line + spaces(adjustedRootSpacing - leftLine.rightOffset + rightLine.leftOffset) + rightLine.line,
                             leftLine.leftOffset+leftTreeAdjust, rightLine.rightOffset+rightTreeAdjust);
                     allTreeLines.add(combined);

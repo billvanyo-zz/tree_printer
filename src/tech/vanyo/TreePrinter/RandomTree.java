@@ -5,8 +5,11 @@ import java.util.Random;
 public class RandomTree {
 
     public static void main(String[] args) {
-        TreeNode tree = randomTree(30, true);
-        TreePrinter.printTree(tree, 3);
+        TreeNode tree = randomTree(50, false);
+        TreePrinter.printTree(tree, 1, true);
+        TreePrinter.printTree(tree, 1, false);
+        TreePrinter.printTree(tree, 3, true);
+        TreePrinter.printTree(tree, 3, false);
     }
 
 
@@ -40,7 +43,7 @@ public class RandomTree {
     private static String nameForNumber(int n) {
         final String underTwenty[] = {"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve",
                 "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"};
-        final String decades[] = {"twenty", "thrity", "fourty", "fifty", "sixty", "seventy", "eighty", "ninety"};
+        final String decades[] = {"twenty", "thirty", "fourty", "fifty", "sixty", "seventy", "eighty", "ninety"};
 
         if (n<20) return underTwenty[n];
         else return decades[n/10-2] + (n%10 == 0 ? "" : (" " + underTwenty[n%10]));
