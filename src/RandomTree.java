@@ -16,13 +16,25 @@ public class RandomTree {
          */
         TreePrinter<TreeNode> printer = new TreePrinter<>(n -> n.getLabel(), n -> n.getLeft(), n -> n.getRight());
 
-        printer.printTree(tree, 1, true);
+        // set minimum horizontal spacing betyween node labels with setHspace
+        printer.setHspace(1);
+        // use square branches
+        printer.setSquareBranches(true);
+        printer.printTree(tree);
         System.out.println();
-        printer.printTree(tree, 1, false);
+
+        // use diagonal branches
+        printer.setSquareBranches(false);
+        printer.printTree(tree);
         System.out.println();
-        printer.printTree(tree, 3, true);
+
+        printer.setHspace(3);
+        printer.setSquareBranches(true);
+        printer.printTree(tree);
         System.out.println();
-        printer.printTree(tree, 3, false);
+
+        printer.setSquareBranches(false);
+        printer.printTree(tree);
     }
 
     public static TreeNode randomTree(int n, boolean userWordsForNumbers) {

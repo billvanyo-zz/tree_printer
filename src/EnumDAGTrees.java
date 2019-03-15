@@ -23,7 +23,8 @@ public class EnumDAGTrees {
         TreePrinter<TreeNode> printer = new TreePrinter<>(n -> n.getLabel(), n -> n.getLeft(), n -> n.getRight());
 
         // this prints trees in rows across the page
-        printer.printTrees(trees, 1, 2, 247, true);
+        printer.setSquareBranches(true);
+        printer.printTrees(trees,120);
 
     }
 
@@ -40,10 +41,8 @@ public class EnumDAGTrees {
                 int leftCount = totalNodes - rightCount - 1;
                 List<TreeNode> leftTrees = subProblems[leftCount];
                 List<TreeNode> rightTrees = subProblems[rightCount];
-                for (int i = 0; i < leftTrees.size(); i++) {
-                    TreeNode leftNode = leftTrees.get(i);
-                    for (int j = 0; j < rightTrees.size(); j++) {
-                        TreeNode rightNode = rightTrees.get(j);
+                for (TreeNode leftNode : leftTrees) {
+                    for (TreeNode rightNode : rightTrees) {
                         TreeNode newRoot = new TreeNode("O", leftNode, rightNode);
                         subProblems[totalNodes].add(newRoot);
                     }

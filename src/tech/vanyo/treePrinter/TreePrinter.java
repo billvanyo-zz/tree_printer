@@ -14,6 +14,10 @@ public class TreePrinter<T> {
 
     private PrintStream outStream = System.out;
 
+    private boolean squareBranches = false;
+    private int hspace = 2;
+    private int tspace = 1;
+
     public TreePrinter(Function<T, String> getLabel, Function<T, T> getLeft, Function<T, T> getRight) {
         this.getLabel = getLabel;
         this.getLeft = getLeft;
@@ -24,14 +28,20 @@ public class TreePrinter<T> {
         this.outStream = outStream;
     }
 
+    public void setSquareBranches(boolean squareBranches) { this.squareBranches = squareBranches; }
+
+    public void setHspace(int hspace) { this.hspace = hspace; }
+
+    public void setTspace(int tspace) { this.hspace = tspace; }
+
     /*
-        Prints ascii representation of binary tree.
-        Parameter hspace is minimum number of spaces between adjacent node labels.
-        Parameter squareBranches, when set to true, results in branches being printed with ASCII box
-        drawing characters.
-     */
-    public void printTree(T root, int hspace, boolean squareBranches) {
-        List<TreeLine> treeLines = buildTreeLines(root, hspace, squareBranches);
+                Prints ascii representation of binary tree.
+                Parameter hspace is minimum number of spaces between adjacent node labels.
+                Parameter squareBranches, when set to true, results in branches being printed with ASCII box
+                drawing characters.
+             */
+    public void printTree(T root) {
+        List<TreeLine> treeLines = buildTreeLines(root);
         printTreeLines(treeLines);
     }
 
@@ -44,14 +54,14 @@ public class TreePrinter<T> {
         Parameter squareBranches, when set to true, results in branches being printed with ASCII box
         drawing characters.
      */
-    public void printTrees(List<T> trees, int hspace, int tspace, int lineWidth, boolean squareBranches) {
+    public void printTrees(List<T> trees, int lineWidth) {
         List<List<TreeLine>> allTreeLines = new ArrayList<>();
         int[] treeWidths = new int[trees.size()];
         int[] minLeftOffsets = new int[trees.size()];
         int[] maxRightOffsets = new int[trees.size()];
         for (int i = 0; i < trees.size(); i++) {
             T treeNode = trees.get(i);
-            List<TreeLine> treeLines = buildTreeLines(treeNode, hspace, squareBranches);
+            List<TreeLine> treeLines = buildTreeLines(treeNode);
             allTreeLines.add(treeLines);
             minLeftOffsets[i] = minLeftOffset(treeLines);
             maxRightOffsets[i] = maxRightOffset(treeLines);
@@ -107,8 +117,7 @@ public class TreePrinter<T> {
         if (treeLines.size() > 0) {
             int minLeftOffset = minLeftOffset(treeLines);
             int maxRightOffset = maxRightOffset(treeLines);
-            for (int i = 0; i < treeLines.size(); i++) {
-                TreeLine treeLine = treeLines.get(i);
+            for (TreeLine treeLine : treeLines) {
                 int leftSpaces = -(minLeftOffset - treeLine.leftOffset);
                 int rightSpaces = maxRightOffset - treeLine.rightOffset;
                 outStream.println(spaces(leftSpaces) + treeLine.line + spaces(rightSpaces));
@@ -116,12 +125,12 @@ public class TreePrinter<T> {
         }
     }
 
-    private List<TreeLine> buildTreeLines(T root, int hspace, boolean squareBranches) {
+    private List<TreeLine> buildTreeLines(T root) {
         if (root == null) return Collections.emptyList();
         else {
             String rootLabel = getLabel.apply(root);
-            List<TreeLine> leftTreeLines = buildTreeLines(getLeft.apply(root), hspace, squareBranches);
-            List<TreeLine> rightTreeLines = buildTreeLines(getRight.apply(root), hspace, squareBranches);
+            List<TreeLine> leftTreeLines = buildTreeLines(getLeft.apply(root));
+            List<TreeLine> rightTreeLines = buildTreeLines(getRight.apply(root));
 
             int leftCount = leftTreeLines.size();
             int rightCount = rightTreeLines.size();

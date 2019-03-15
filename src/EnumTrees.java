@@ -18,7 +18,8 @@ public class EnumTrees {
          */
         TreePrinter<TreeNode> printer = new TreePrinter<>(n -> n.getLabel(), n -> n.getLeft(), n -> n.getRight());
 
-        printer.printTrees(trees, 1, 1, 120, true);
+        printer.setSquareBranches(true);
+        printer.printTrees(trees, 120);
     }
 
     public static List<TreeNode> enumTrees(int treeSize, boolean useWordsForNumbers) {
@@ -33,10 +34,8 @@ public class EnumTrees {
             for (int rootLabel = firstLabel; rootLabel <= lastLabel; rootLabel++) {
                 List<TreeNode> leftTrees = enumTrees(firstLabel, rootLabel - 1, useWordsForNumbers);
                 List<TreeNode> rightTrees = enumTrees(rootLabel + 1, lastLabel, useWordsForNumbers);
-                for (int i = 0; i < leftTrees.size(); i++) {
-                    TreeNode leftTree = leftTrees.get(i);
-                    for (int j = 0; j < rightTrees.size(); j++) {
-                        TreeNode rightTree = rightTrees.get(j);
+                for (TreeNode leftTree : leftTrees) {
+                    for (TreeNode rightTree : rightTrees) {
                         TreeNode root = new TreeNode(labelForNode(rootLabel, useWordsForNumbers), leftTree, rightTree);
                         allTrees.add(root);
                     }
