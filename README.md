@@ -1,13 +1,28 @@
 # tree_printer
 A Java class for printing binary trees as ASCII text
 
-The Java class TreePrinter has two static methods for printing binary trees as ASCII text.
+It hasn't been optimized for run time efficiency, but since we're talking about printing in ASCII, I figured it's not going to be used on very large trees.  It does have some nice features though.
+
+ 1. It makes efficient use of space in that a large subtree extends under a smaller one as much as possible.
+ 2. There's a parameter to set the minimum horizontal space between node labels.
+ 3. Node labels are strings of arbitrary length.
+ 4. In addition to a method for printing a single tree, there's a method for printing a list of trees horizontally across the page (with a parameter for page width), using as many rows as necessary.
+ 5. There's an option to print trees with diagonal branches (using slash and backslash characters) or with horizontal branches (using ascii box drawing characters). The latter is more compact and makes tree levels more visually clear.
+ 6. It works.
+
+Some demo/test programs are included.
+
+The Java class TreePrinter has four static methods for printing binary trees as ASCII text.
 
 PrintTree prints a single tree.  In addition to the tree, it takes a positive integer parameter 'hspace' which is the minimum number of horizontal spaces between any two node labels in the tree.
 
+A variant of PrintTree takes an additional boolean parameter, which if true, results in trees being printed with horizontal branches (using ascii box drawing characters).
+
 PrintTrees prints a list of trees horizontally across the page, in multiple rows if necessary.  In addition to the tree and 'hspace' parameter, it takes a 'tspace' parameter which is the number of space columns between trees horizontally, as well as the number of blank lines between rows of trees, and a 'lineWidth' parameter which is the maximum width of the page.
 
-A few test/demo programs are included.  For instance, EnumTrees can be used to print an enumeration of all binary trees of a given size.  All trees of size 5, labeled with number word (one, two, etc) is printed as:
+A variant of PrintTrees also takes an additional boolean parameter, which if true, results in trees being printed with horizontal branches (using ascii box drawing characters).
+
+A few test/demo programs are included.  For instance, the program EnumTrees can be used to print an enumeration of all binary trees of a given size.  All trees of size 5, labeled with number words (one, two, etc) is printed as:
 
 ```
 one           one         one          one        one       one         one       one          one      
@@ -66,54 +81,115 @@ one four    two four  one       one          two        three         three
                           \       /       one  three     \           /         
                          three  two                      two       one         
 ```
-RandomTree can be used to print a single randomly generated tree, such as the following:
+RandomTree can be used to print a single randomly generated tree.  The following is an example of the same tree printed 4 different ways, with horizontal spacing of 1 and of 3, and with diagonal and horizontal branches.
+
 ```
-                seven                                              
-                / \                                               
-               /   \                                              
-              /     \                                             
-             /       \                                            
-            /         \                                           
-           /           \                                          
-         five        sixteen                                      
-         / \           / \                                        
-        /   \         /   \                                       
-       /     \       /     \                                      
-    three    six    /       \                                     
-     / \           /         \                                    
-    /   \         /           \                                   
-  two   four     /             \                                  
-  /             /               \                                 
-one            /                 \                                
-              /                   \                               
-             /                     \                              
-            /                       \                             
-           /                         \                            
-          /                           \                           
-         /                             \                          
-       ten                          twenty two                    
-       / \                             / \                        
-      /   \                           /   \                       
-     /     \                         /     \                      
-    /       \                       /       \                     
-   /         \                     /         \                    
-eight      fifteen                /           \                   
-   \         /                   /             \                  
-   nine   eleven            twenty one     twenty three           
-             \                 /                 \                
-            twelve         eighteen          twenty four          
-               \             / \                   \              
-             thirteen       /   \              twenty seven       
-                 \         /     \                 / \            
-               fourteen   /       \               /   \           
-                         /         \             /     \          
-                    seventeen    nineteen       /       \         
-                                     \         /         \        
-                                    twenty    /           \       
-                                         twenty six   twenty eight
-                                            /               \     
-                                      twenty five          thrity 
-                                                            /     
-                                                      twenty nine 
+       5                      
+    ┌──┴──┐                   
+    3     30                  
+   ┌┴┐  ┌─┘                   
+   1 4  6                     
+   └─┐  └─┐                   
+     2    15                  
+    ┌─────┴─────┐             
+    10          21            
+┌───┴───┐   ┌───┴───┐         
+7       14  17      23        
+└─┐   ┌─┘ ┌─┴─┐   ┌─┴─┐       
+  8   11  16  19  22  26      
+  └─┐ └─┐   ┌─┴─┐   ┌─┴─┐     
+    9   13  18  20  25  27    
+      ┌─┘         ┌─┘   └─┐   
+      12          24      28  
+                          └─┐ 
+                            29
+
+
+
+     5                     
+    / \                    
+   /   \                   
+  3     30                 
+ / \   /                   
+1   4 6                    
+ \     \                   
+  2     15                 
+       / \                 
+      /   \                
+     /     \               
+    /       \              
+   10        21            
+  / \       / \            
+ /   \     /   \           
+7     14  /     \          
+ \   /   17      23        
+  8 11  / \     / \        
+   \ \ 16  19  22  26      
+    9 13  / \     / \      
+     /   18  20  25  27    
+    12          /     \    
+               24      28  
+                        \  
+                         29
+
+
+
+          5                              
+      ┌───┴───┐                          
+      3       30                         
+    ┌─┴─┐   ┌─┘                          
+    1   4   6                            
+    └─┐     └─┐                          
+      2       15                         
+     ┌────────┴────────┐                 
+     10                21                
+┌────┴────┐      ┌─────┴─────┐           
+7         14     17          23          
+└─┐     ┌─┘   ┌──┴──┐     ┌──┴──┐        
+  8     11    16    19    22    26       
+  └─┐   └─┐      ┌──┴──┐     ┌──┴──┐     
+    9     13     18    20    25    27    
+        ┌─┘                ┌─┘     └─┐   
+        12                 24        28  
+                                     └─┐ 
+                                       29
+
+
+
+         5                              
+        / \                             
+       /   \                            
+      /     \                           
+     3       30                         
+    / \     /                           
+   1   4   6                            
+    \       \                           
+     2       15                         
+            / \                         
+           /   \                        
+          /     \                       
+         /       \                      
+        /         \                     
+       /           \                    
+      /             \                   
+     /               \                  
+    10                21                
+   / \               / \                
+  /   \             /   \               
+ /     \           /     \              
+7       14        /       \             
+ \     /         /         \            
+  8   11        17          23          
+   \   \       / \         / \          
+    9   13    /   \       /   \         
+       /     16    19    22    26       
+      12          / \         / \       
+                 /   \       /   \      
+                18    20    25    27    
+                           /       \    
+                          24        28  
+                                     \  
+                                      29
+
 ```
 
