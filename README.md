@@ -25,6 +25,11 @@ A variant of PrintTrees also takes an additional boolean parameter, which if tru
 A few test/demo programs are included.  For instance, the program EnumTrees can be used to print an enumeration of all binary trees of a given size.  All trees of size 5, labeled with number words (one, two, etc) is printed as:
 
 ```
+mvn compile 
+mvn exec:java -Dexec.mainClass="EnumTrees"
+```
+This produces output like:
+```
 one           one         one          one        one       one         one       one          one      
   \             \           \            \          \         \           \         \            \      
   two           two         two          two        two      three       three      four         four   
@@ -81,7 +86,14 @@ one four    two four  one       one          two        three         three
                           \       /       one  three     \           /         
                          three  two                      two       one         
 ```
-RandomTree can be used to print a single randomly generated tree.  The following is an example of the same tree printed 4 different ways, with horizontal spacing of 1 and of 3, and with diagonal and horizontal branches.
+RandomTree can be used to print a single randomly generated tree.  The following is an example of the same tree 
+printed 4 different ways, with horizontal spacing of 1 and of 3, and with diagonal and horizontal branches.  To 
+run this from the command line using maven type: 
+```
+mvn compile 
+mvn exec:java -Dexec.mainClass="RandomTree"
+```
+This produces output like:
 ```
                    27        
              ┌─────┴─────┐   
