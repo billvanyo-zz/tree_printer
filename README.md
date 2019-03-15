@@ -173,5 +173,6 @@ RandomTree can be used to print a single randomly generated tree.  The following
             / \                  
            /   \                 
           14    16               
+
 ```
 
