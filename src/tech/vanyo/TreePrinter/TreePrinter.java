@@ -176,8 +176,8 @@ public class TreePrinter {
                 if (!rightTreeLines.isEmpty()) {
                     // there's a right subtree only
                     if (squareBranches) {
-                        allTreeLines.add(new TreeLine("\u2514\u2500\u2510", 0, 2));
-                        rightTreeAdjust = 2;
+                        allTreeLines.add(new TreeLine("\u2514\u2510", 0, 1));
+                        rightTreeAdjust = 1;
 
                     } else {
                         allTreeLines.add(new TreeLine("\\", 1, 1));
@@ -187,8 +187,8 @@ public class TreePrinter {
             } else if (rightTreeLines.isEmpty()) {
                 // there's a left subtree only
                 if (squareBranches) {
-                    allTreeLines.add(new TreeLine("\u250C\u2500\u2518", -2, 0));
-                    leftTreeAdjust = -2;
+                    allTreeLines.add(new TreeLine("\u250C\u2518", -1, 0));
+                    leftTreeAdjust = -1;
                 } else {
                     allTreeLines.add(new TreeLine("/", -1, -1));
                     leftTreeAdjust = -2;
