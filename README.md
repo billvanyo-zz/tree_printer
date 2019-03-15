@@ -82,7 +82,6 @@ one four    two four  one       one          two        three         three
                          three  two                      two       one         
 ```
 RandomTree can be used to print a single randomly generated tree.  The following is an example of the same tree printed 4 different ways, with horizontal spacing of 1 and of 3, and with diagonal and horizontal branches.
-
 ```
                    27        
              ┌─────┴─────┐   
