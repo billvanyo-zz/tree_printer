@@ -137,6 +137,9 @@ public class TreePrinter<T> {
             int minCount = Math.min(leftCount, rightCount);
             int maxCount = Math.max(leftCount, rightCount);
 
+            // The left and right subtree print representations have jagged edges, and we essentially we have to
+            // figure out how close together we can bring the left and right roots so that the edges just meet on
+            // some line.  Then we add hspace, and round up to next odd number.
             int maxRootSpacing = 0;
             for (int i = 0; i < minCount; i++) {
                 int spacing = leftTreeLines.get(i).rightOffset - rightTreeLines.get(i).leftOffset;
