@@ -3,8 +3,6 @@ public class TreeNode {
     private TreeNode left;
     private TreeNode right;
 
-    // getters
-
     public TreeNode(String label) {
         this.label = label;
     }
@@ -19,22 +17,6 @@ public class TreeNode {
         return new TreeNode(label, left, right);
     }
 
-    // setters
-
-    public static TreeNode treeLeft(String label, TreeNode left) {
-        return new TreeNode(label, left, null);
-    }
-
-    public static TreeNode treeRight(String label, TreeNode right) {
-        return new TreeNode(label, null, right);
-    }
-
-    public static TreeNode leaf(String label) {
-        return new TreeNode(label, null, null);
-    }
-
-    // constructors
-
     public String getLabel() {
         return label;
     }
@@ -42,8 +24,6 @@ public class TreeNode {
     public void setLabel(String label) {
         this.label = label;
     }
-
-    // convenience methods to build trees
 
     public TreeNode getLeft() {
         return left;
@@ -59,6 +39,20 @@ public class TreeNode {
 
     public void setRight(TreeNode right) {
         this.right = right;
+    }
+
+    // convenience methods to build trees
+
+    public static TreeNode treeLeft(String label, TreeNode left) {
+        return new TreeNode(label, left, null);
+    }
+
+    public static TreeNode treeRight(String label, TreeNode right) {
+        return new TreeNode(label, null, right);
+    }
+
+    public static TreeNode leaf(String label) {
+        return new TreeNode(label, null, null);
     }
 }
 
