@@ -13,10 +13,6 @@ public class TreeNode {
         this.right = right;
     }
 
-    public static TreeNode tree(String label, TreeNode left, TreeNode right) {
-        return new TreeNode(label, left, right);
-    }
-
     public String getLabel() {
         return label;
     }
@@ -42,6 +38,10 @@ public class TreeNode {
     }
 
     // convenience methods to build trees
+
+    public static TreeNode tree(String label, TreeNode left, TreeNode right) {
+        return new TreeNode(label, left, right);
+    }
 
     public static TreeNode treeLeft(String label, TreeNode left) {
         return new TreeNode(label, left, null);
