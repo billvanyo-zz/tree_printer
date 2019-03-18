@@ -35,11 +35,11 @@ public class TreePrinter<T> {
     public void setTspace(int tspace) { this.hspace = tspace; }
 
     /*
-                Prints ascii representation of binary tree.
-                Parameter hspace is minimum number of spaces between adjacent node labels.
-                Parameter squareBranches, when set to true, results in branches being printed with ASCII box
-                drawing characters.
-             */
+        Prints ascii representation of binary tree.
+        Parameter hspace is minimum number of spaces between adjacent node labels.
+        Parameter squareBranches, when set to true, results in branches being printed with ASCII box
+        drawing characters.
+     */
     public void printTree(T root) {
         List<TreeLine> treeLines = buildTreeLines(root);
         printTreeLines(treeLines);
@@ -82,11 +82,7 @@ public class TreePrinter<T> {
             endTreeIndex--;
 
             // find max number of lines for tallest tree
-            int maxLines = 0;
-            for (int i = nextTreeIndex; i <= endTreeIndex; i++) {
-                int lineCount = allTreeLines.get(i).size();
-                if (lineCount > maxLines) maxLines = lineCount;
-            }
+            int maxLines = allTreeLines.stream().mapToInt(list -> list.size()).max().orElse(0);
 
             // print trees line by line
             for (int i = 0; i < maxLines; i++) {
@@ -103,7 +99,6 @@ public class TreePrinter<T> {
                 }
                 System.out.println();
             }
-            System.out.println();
 
             for (int i = 0; i < tspace; i++) {
                 System.out.println();
@@ -183,7 +178,7 @@ public class TreePrinter<T> {
             } else {
                 // there's a left and right subtree
                 if (squareBranches) {
-                    int adjust = (rootSpacing == 1 ? 1 : ((rootSpacing / 2) + 1));
+                    int adjust = (rootSpacing / 2) + 1;
                     String horizontal = String.join("", Collections.nCopies(rootSpacing / 2, "\u2500"));
                     String branch = "\u250C" + horizontal + "\u2534" + horizontal + "\u2510";
                     allTreeLines.add(new TreeLine(branch, -adjust, adjust));
