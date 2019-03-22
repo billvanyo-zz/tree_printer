@@ -23,6 +23,10 @@ public class RandomTree {
         printer.printTree(tree);
         System.out.println();
 
+        // option to render single left or right subtree as straight down branch (i.e. no indication of left or right)
+        printer.setLrAgnostic(true);
+        printer.printTree(tree);
+
         // use diagonal branches
         printer.setSquareBranches(false);
         printer.printTree(tree);

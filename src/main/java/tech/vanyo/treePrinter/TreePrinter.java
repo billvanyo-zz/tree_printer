@@ -15,6 +15,7 @@ public class TreePrinter<T> {
     private PrintStream outStream = System.out;
 
     private boolean squareBranches = false;
+    private boolean lrAgnostic = false;
     private int hspace = 2;
     private int tspace = 1;
 
@@ -29,6 +30,8 @@ public class TreePrinter<T> {
     }
 
     public void setSquareBranches(boolean squareBranches) { this.squareBranches = squareBranches; }
+
+    public void setLrAgnostic(boolean lrAgnostic) { this.lrAgnostic = lrAgnostic; }
 
     public void setHspace(int hspace) { this.hspace = hspace; }
 
@@ -158,9 +161,12 @@ public class TreePrinter<T> {
                 if (!rightTreeLines.isEmpty()) {
                     // there's a right subtree only
                     if (squareBranches) {
-                        allTreeLines.add(new TreeLine("\u2514\u2510", 0, 1));
-                        rightTreeAdjust = 1;
-
+                        if (lrAgnostic) {
+                            allTreeLines.add(new TreeLine("\u2502", 0, 0));
+                        } else {
+                            allTreeLines.add(new TreeLine("\u2514\u2510", 0, 1));
+                            rightTreeAdjust = 1;
+                        }
                     } else {
                         allTreeLines.add(new TreeLine("\\", 1, 1));
                         rightTreeAdjust = 2;
@@ -169,8 +175,12 @@ public class TreePrinter<T> {
             } else if (rightTreeLines.isEmpty()) {
                 // there's a left subtree only
                 if (squareBranches) {
-                    allTreeLines.add(new TreeLine("\u250C\u2518", -1, 0));
-                    leftTreeAdjust = -1;
+                    if (lrAgnostic) {
+                        allTreeLines.add(new TreeLine("\u2502", 0, 0));
+                    } else {
+                        allTreeLines.add(new TreeLine("\u250C\u2518", -1, 0));
+                        leftTreeAdjust = -1;
+                    }
                 } else {
                     allTreeLines.add(new TreeLine("/", -1, -1));
                     leftTreeAdjust = -2;
