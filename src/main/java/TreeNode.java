@@ -1,24 +1,24 @@
 public class TreeNode {
-    private String label;
+    private int value;
     private TreeNode left;
     private TreeNode right;
 
-    public TreeNode(String label) {
-        this.label = label;
+    public TreeNode(int value) {
+        this.value = value;
     }
 
-    public TreeNode(String label, TreeNode left, TreeNode right) {
-        this.label = label;
+    public TreeNode(int value, TreeNode left, TreeNode right) {
+        this.value = value;
         this.left = left;
         this.right = right;
     }
 
-    public String getLabel() {
-        return label;
+    public int getValue() {
+        return value;
     }
 
-    public void setLabel(String label) {
-        this.label = label;
+    public void setValue(int value) {
+        this.value = value;
     }
 
     public TreeNode getLeft() {
@@ -39,20 +39,20 @@ public class TreeNode {
 
     // convenience methods to build trees
 
-    public static TreeNode tree(String label, TreeNode left, TreeNode right) {
-        return new TreeNode(label, left, right);
+    public static TreeNode tree(int value, TreeNode left, TreeNode right) {
+        return new TreeNode(value, left, right);
     }
 
-    public static TreeNode treeLeft(String label, TreeNode left) {
-        return new TreeNode(label, left, null);
+    public static TreeNode treeLeft(int value, TreeNode left) {
+        return new TreeNode(value, left, null);
     }
 
-    public static TreeNode treeRight(String label, TreeNode right) {
-        return new TreeNode(label, null, right);
+    public static TreeNode treeRight(int value, TreeNode right) {
+        return new TreeNode(value, null, right);
     }
 
-    public static TreeNode leaf(String label) {
-        return new TreeNode(label, null, null);
+    public static TreeNode leaf(int value) {
+        return new TreeNode(value, null, null);
     }
 }
 

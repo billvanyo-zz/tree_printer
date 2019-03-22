@@ -9,34 +9,33 @@ public class EnumTrees {
     // These trees are labelled with either ints or words for ints.
 
     public static void main(String[] args) {
-        List<TreeNode> trees = enumTrees(6, true);
+        List<TreeNode> trees = enumTrees(6);
 
         /*
             We declare a TreePrinter object, parameterized with the type of tree object it will be printing (in this
             case TreeNode), and call the TreePrinter constructor, providing lambda functions to get the TreeNode's
             label as a String, and to get the left and right and right subtrees.
          */
-        TreePrinter<TreeNode> printer = new TreePrinter<>(n -> n.getLabel(), n -> n.getLeft(), n -> n.getRight());
-
+        TreePrinter<TreeNode> printer = new TreePrinter<>(n -> labelForNode(n.getValue()), n -> n.getLeft(), n -> n.getRight());
         printer.setSquareBranches(true);
         printer.printTrees(trees, 120);
     }
 
-    public static List<TreeNode> enumTrees(int treeSize, boolean useWordsForNumbers) {
-        return enumTrees(1, treeSize, useWordsForNumbers);
+    public static List<TreeNode> enumTrees(int treeSize) {
+        return enumTrees(1, treeSize);
     }
 
-    private static List<TreeNode> enumTrees(int firstLabel, int lastLabel, boolean useWordsForNumbers) {
+    private static List<TreeNode> enumTrees(int firstValue, int lastValue) {
         List<TreeNode> allTrees = new ArrayList<>();
-        if (firstLabel > lastLabel) {
+        if (firstValue > lastValue) {
             allTrees.add(null);
         } else {
-            for (int rootLabel = firstLabel; rootLabel <= lastLabel; rootLabel++) {
-                List<TreeNode> leftTrees = enumTrees(firstLabel, rootLabel - 1, useWordsForNumbers);
-                List<TreeNode> rightTrees = enumTrees(rootLabel + 1, lastLabel, useWordsForNumbers);
+            for (int rootValue = firstValue; rootValue <= lastValue; rootValue++) {
+                List<TreeNode> leftTrees = enumTrees(firstValue, rootValue - 1);
+                List<TreeNode> rightTrees = enumTrees(rootValue + 1, lastValue);
                 for (TreeNode leftTree : leftTrees) {
                     for (TreeNode rightTree : rightTrees) {
-                        TreeNode root = new TreeNode(labelForNode(rootLabel, useWordsForNumbers), leftTree, rightTree);
+                        TreeNode root = new TreeNode(rootValue, leftTree, rightTree);
                         allTrees.add(root);
                     }
                 }
@@ -45,11 +44,9 @@ public class EnumTrees {
         return allTrees;
     }
 
-    private static String labelForNode(int n, boolean useWordsForNumbers) {
+    private static String labelForNode(int n) {
         final String[] numberNames = {"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"};
-
-        if (useWordsForNumbers) return numberNames[n];
-        else return "" + n;
+        return numberNames[n];
     }
 
 }

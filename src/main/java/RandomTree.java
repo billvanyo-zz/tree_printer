@@ -7,16 +7,22 @@ public class RandomTree {
     private static Random r = new Random();
 
     public static void main(String[] args) {
-        TreeNode tree = randomTree(60, false);
+        TreeNode tree = randomTree(30);
 
         /*
             We declare a TreePrinter object, parameterized with the type of tree object it will be printing (in this
             case TreeNode), and call the TreePrinter constructor, providing lambda functions to get the TreeNode's
             label as a String, and to get the left and right and right subtrees.
          */
-        TreePrinter<TreeNode> printer = new TreePrinter<>(n -> n.getLabel(), n -> n.getLeft(), n -> n.getRight());
+        TreePrinter<TreeNode> printer = new TreePrinter<>(n -> nameForNumber(n.getValue()), n -> n.getLeft(), n -> n.getRight());
+        // set minimum horizontal spacing between node labels with setHspace
+        printer.setHspace(1);
+        // use square branches
+        printer.setSquareBranches(true);
+        printer.printTree(tree);
+        System.out.println();
 
-        // set minimum horizontal spacing betyween node labels with setHspace
+        printer = new TreePrinter<>(n -> ""+n.getValue(), n -> n.getLeft(), n -> n.getRight());
         printer.setHspace(1);
         // use square branches
         printer.setSquareBranches(true);
@@ -41,26 +47,21 @@ public class RandomTree {
         printer.printTree(tree);
     }
 
-    public static TreeNode randomTree(int n, boolean userWordsForNumbers) {
-        return randomTree(1, n, userWordsForNumbers);
+    public static TreeNode randomTree(int n) {
+        return randomTree(1, n);
     }
 
-    private static TreeNode randomTree(int firstLabel, int lastLabel, boolean userWordsForNumbers) {
-        if (firstLabel > lastLabel) return null;
+    private static TreeNode randomTree(int firstValue, int lastValue) {
+        if (firstValue > lastValue) return null;
         else {
-            int treeSize = lastLabel - firstLabel + 1;
+            int treeSize = lastValue - firstValue + 1;
             int leftCount = r.nextInt(treeSize);
             int rightCount = treeSize - leftCount - 1;
-            TreeNode root = new TreeNode(labelForNode(firstLabel + leftCount, userWordsForNumbers));
-            root.setLeft(randomTree(firstLabel, firstLabel + leftCount - 1, userWordsForNumbers));
-            root.setRight(randomTree(firstLabel + leftCount + 1, lastLabel, userWordsForNumbers));
+            TreeNode root = new TreeNode(firstValue + leftCount);
+            root.setLeft(randomTree(firstValue, firstValue + leftCount - 1));
+            root.setRight(randomTree(firstValue + leftCount + 1, lastValue));
             return root;
         }
-    }
-
-    private static String labelForNode(int n, boolean useWordsForNumbers) {
-        if (useWordsForNumbers) return nameForNumber(n);
-        else return "" + n;
     }
 
     private static String nameForNumber(int n) {
