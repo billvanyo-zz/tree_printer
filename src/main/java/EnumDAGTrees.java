@@ -20,7 +20,7 @@ public class EnumDAGTrees {
             case TreeNode), and call the TreePrinter constructor, providing lambda functions to get the TreeNode's
             label as a String, and to get the left and right and right subtrees.
          */
-        TreePrinter<TreeNode> printer = new TreePrinter<>(n -> n.getLabel(), n -> n.getLeft(), n -> n.getRight());
+        TreePrinter<TreeNode> printer = new TreePrinter<>(n -> ""+n.getValue(), n -> n.getLeft(), n -> n.getRight());
 
         // this prints trees in rows across the page
         printer.setSquareBranches(true);
@@ -43,7 +43,7 @@ public class EnumDAGTrees {
                 List<TreeNode> rightTrees = subProblems[rightCount];
                 for (TreeNode leftNode : leftTrees) {
                     for (TreeNode rightNode : rightTrees) {
-                        TreeNode newRoot = new TreeNode("O", leftNode, rightNode);
+                        TreeNode newRoot = new TreeNode(0, leftNode, rightNode);
                         subProblems[totalNodes].add(newRoot);
                     }
                 }
