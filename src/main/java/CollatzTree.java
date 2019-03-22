@@ -14,10 +14,6 @@ public class CollatzTree {
         printer.setSquareBranches(true);
         printer.setLrAgnostic(true);
         printer.printTree(root);
-        System.out.println();
-
-        printer.setLrAgnostic(false);
-        printer.printTree(root);
     }
 
 
@@ -29,9 +25,7 @@ public class CollatzTree {
         TreeNode root = new TreeNode(start);
         if (curLength < maxLength) {
             root.setLeft(collatzTree(start*2, curLength+1, maxLength));
-            if (start%3==1 && ((start-1)/3)%2==1 && start>4) {
-                root.setRight(collatzTree((start-1)/3, curLength+1, maxLength));
-            }
+            if (start%6==4 && start>4) root.setRight(collatzTree((start-1)/3, curLength+1, maxLength));
         }
         return root;
     }
