@@ -24,7 +24,11 @@ public class CollatzTree {
     private static TreeNode collatzTree(int start, int curLength, int maxLength) {
         TreeNode root = new TreeNode(start);
         if (curLength < maxLength) {
+            // Forward Collatz sequence has that an even number N is followed by N/2, which is either an even or odd number.
+            // So in reverse, either an even or odd number (any number) can be preceded by 2N.
             root.setLeft(collatzTree(start*2, curLength+1, maxLength));
+            // Forward Collatz sequence has that an odd number N (i.e. a number of form 2X+1) is followed by 3N+1 (i.e. 3(2X+1)+1, or 6X+4).
+            // So in reverse, a number N of the form 6X+4 can be preceded by (N-1)/3
             if (start%6==4 && start>4) root.setRight(collatzTree((start-1)/3, curLength+1, maxLength));
         }
         return root;
