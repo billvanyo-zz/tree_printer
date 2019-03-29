@@ -7,6 +7,7 @@ public class CollatzTree {
         TreeNode root;
 
         root = collatzTree(18);
+        // Collatz Conjecture: for every positive integer X, there is some N such that X appears in collatzTree(N) 
 
         TreePrinter<TreeNode> printer = new TreePrinter<>(n -> ""+n.getValue(), n -> n.getLeft(), n -> n.getRight());
 
