@@ -13,15 +13,9 @@ It hasn't been optimized for run time efficiency, but since we're talking about 
 
 Some demo/test programs are included.
 
-The Java class TreePrinter has four static methods for printing binary trees as ASCII text.
+The TreePrinter object has two methods for printing binary trees as ASCII text. PrintTree prints a single tree. PrintTrees prints a list of trees horizontally across the page, in multiple rows if necessary. 
 
-PrintTree prints a single tree.  In addition to the tree, it takes a positive integer parameter 'hspace' which is the minimum number of horizontal spaces between any two node labels in the tree.
-
-A variant of PrintTree takes an additional boolean parameter, which if true, results in trees being printed with horizontal branches (using ascii box drawing characters).
-
-PrintTrees prints a list of trees horizontally across the page, in multiple rows if necessary.  In addition to the tree and 'hspace' parameter, it takes a 'tspace' parameter which is the number of space columns between trees horizontally, as well as the number of blank lines between rows of trees, and a 'lineWidth' parameter which is the maximum width of the page.
-
-A variant of PrintTrees also takes an additional boolean parameter, which if true, results in trees being printed with horizontal branches (using ascii box drawing characters).
+The TreePrinter object has a few settable parameters affecting how it prints trees.  A positive integer parameter 'hspace' specifies the minimum number of horizontal spaces between any two node labels in the tree. A boolean parameter 'squareBranches' determines whether the tree is drawn with horizontal branches (using ascii box drawing characters) or diagonal branches (using slash and backslash characters).  The boolean 'lrAgnostic' parameter only affects trees drawn with the ascii box drawing characters. Its effect is is that tree nodes with only a single subtree are drawn with a straight down vertical branch, providing no indication of whether it is a left or right subtree.
 
 A few test/demo programs are included.  For instance, the program EnumTrees can be used to print an enumeration of all binary trees of a given size.  All trees of size 5, labeled with number words (one, two, etc) is printed as:
 
