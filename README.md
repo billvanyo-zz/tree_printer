@@ -182,4 +182,38 @@ This produces output like:
           14    16               
 
 ```
-
+There's a demo program that produces a tree diagram of all Collatz sequences 
+(https://en.wikipedia.org/wiki/Collatz_conjecture) of a given length.  This demonstrates an option to print trees
+in such a way that if there is only a single subtree, it is treated the same regardless of whether it is a left
+or right subtree. This produces output like:
+```
+                                                       1                                 
+                                                       │                                 
+                                                       2                                 
+                                                       │                                 
+                                                       4                                 
+                                                       │                                 
+                                                       8                                 
+                                                       │                                 
+                                                       16                                
+                                 ┌─────────────────────┴─────────────────────┐           
+                                 32                                          5           
+                                 │                                           │           
+                                 64                                          10          
+                      ┌──────────┴──────────┐                      ┌─────────┴─────────┐ 
+                     128                    21                     20                  3 
+                      │                     │                      │                   │ 
+                     256                    42                     40                  6 
+           ┌──────────┴──────────┐          │             ┌────────┴────────┐          │ 
+          512                    85         84            80                13         12
+           │                     │          │             │                 │          │ 
+          1024                  170        168           160                26         24
+     ┌─────┴─────┐               │          │        ┌────┴────┐            │          │ 
+    2048        341             340        336      320        53           52         48
+     │           │          ┌────┴────┐     │        │         │        ┌───┴───┐      │ 
+    4096        682        680       113   672      640       106      104      17     96
+  ┌──┴──┐     ┌──┴──┐       │         │     │     ┌──┴──┐    ┌─┴─┐      │       │      │ 
+ 8192  1365  1364  227     1360      226   1344  1280  213  212  35    208      34    192
+  │     │     │     │    ┌──┴──┐    ┌─┴─┐   │     │     │    │   │    ┌─┴─┐   ┌─┴─┐    │ 
+16384  2730  2728  454  2720  453  452  75 2688  2560  426  424  70  416  69  68  11  384
+```
