@@ -149,9 +149,12 @@ public class TreePrinter<T> {
 
             List<TreeLine> allTreeLines = new ArrayList<>();
 
+            // strip ANSI escape codes to get length of rendered string. Fixes wrong padding when labels use ANSI escapes for colored nodes.
+            String renderedRootLabel = rootLabel.replaceAll("\\e\\[[\\d;]*[^\\d;]", "");
+
             // add the root and the two branches leading to the subtrees
 
-            allTreeLines.add(new TreeLine(rootLabel, -(rootLabel.length() - 1) / 2, rootLabel.length() / 2));
+            allTreeLines.add(new TreeLine(rootLabel, -(renderedRootLabel.length() - 1) / 2, renderedRootLabel.length() / 2));
 
             // also calculate offset adjustments for left and right subtrees
             int leftTreeAdjust = 0;
